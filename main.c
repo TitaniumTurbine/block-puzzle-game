@@ -172,8 +172,9 @@ void rotate(){
         xPos[i] = 2 * (pivotY - oldY[i]) + pivotX;
     }
 
-    // check intersections with newlines and correct
+    // check intersections and correct
     for(int i = 0; i < 4; i++){
+        // newlines - move back into play area
         if(screen[(screenWidth * yPos[i] + xPos[i])] == '\n' || screen[(screenWidth * yPos[i] + xPos[i] + 1)] == '\n'){
             // right side
             if(xPos[i] > screenWidth / 2){
@@ -188,6 +189,14 @@ void rotate(){
                     xPos[j] += 2;
                 }
             }
+        }
+
+        //other blocks - revert rotation
+        else if(screen[(screenWidth * yPos[i] + xPos[i])] != ' ' || screen[(screenWidth * yPos[i] + xPos[i] + 1)] != ' '){
+            for(int j = 0; j < 4; j++){
+                    xPos[j] = oldX[j];
+                    yPos[j] = oldY[j];
+                }
         }
     }
 
